@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Patatap Replica</title>
+	
+	<!-- Adding CSS and PaperJs and Howl -->
+	<script type="text/javascript" src="paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.28/howler.js"></script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+
+	<script type="text/paperscript" canvas="myCanvas">
+		// creating data for each key
+		var keyData = {
+			q: {
+				sound: new Howl({
+		  		urls: ['sounds/bubbles.mp3']
+				}),
+				color:'#9b98ba'
+			},
+			w: {
+				sound: new Howl({
+		  		urls: ['sounds/clay.mp3']
+				}),
+				color: '#80f5bf'
+			},
+			e: {
+				sound: new Howl({
+		  		urls: ['sounds/confetti.mp3']
+				}),
+				color: '#ad4ffb'
+			},
+			r: {
+				sound: new Howl({
+		  		urls: ['sounds/corona.mp3']
+				}),
+				color: '#9a196d'
+			},
+			t: {
+				sound: new Howl({
+		  		urls: ['sounds/dotted-spiral.mp3']
+				}),
+				color: '#c7bd7e'
+			},
+			y: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-1.mp3']
+				}),
+				color: '#147693'
+			},
+			u: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-2.mp3']
+				}),
+				color: '#6075ff'
+			},
+			i: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-3.mp3']
+				}),
+				color: '#1970e5'
+			},
+			o: {
+				sound: new Howl({
+					urls: ['sounds/glimmer.mp3']
+				}),
+				color: '#d664ce'
+			},
+			p: {
+				sound: new Howl({
+		  		urls: ['sounds/moon.mp3']
+				}),
+				color: '#7adb8a'
+			},
+			a: {
+				sound: new Howl({
+		  		urls: ['sounds/pinwheel.mp3']
+				}),
+				color: '#5e9cd3'
+			},
+			s: {
+				sound: new Howl({
+		  		urls: ['sounds/piston-1.mp3']
+				}),
+				color: '#f8d014'
+			},
+			d: {
+				sound: new Howl({
+		  		urls: ['sounds/piston-2.mp3']
+				}),
+				color: '#ddf7f2'
+			},
+			f: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-1.mp3']
+				}),
+				color: '#95a5a6'
+			},
+			g: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-2.mp3']
+				}),
+				color: '#e136ad'
+			},
+			h: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-3.mp3']
+				}),
+				color: '#097eb9'
+			},
+			j: {
+				sound: new Howl({
+		  		urls: ['sounds/splits.mp3']
+				}),
+				color: '#fb3e01'
+			},
+			k: {
+				sound: new Howl({
+		  		urls: ['sounds/squiggle.mp3']
+				}),
+				color: '#619479'
+			},
+			l: {
+				sound: new Howl({
+		  		urls: ['sounds/strike.mp3']
+				}),
+				color: '#a1bbce'
+			},
+			z: {
+				sound: new Howl({
+		  		urls: ['sounds/suspension.mp3']
+				}),
+				color: '#15b7e8'
+			},
+			x: {
+				sound: new Howl({
+		  		urls: ['sounds/timer.mp3']
+				}),
+				color: '#33cbc5'
+			},
+			c: {
+				sound: new Howl({
+		  		urls: ['sounds/ufo.mp3']
+				}),
+				color: '#bc11fe'
+			},
+			v: {
+				sound: new Howl({
+		  		urls: ['sounds/veil.mp3']
+				}),
+				color: '#f9d2c6'
+			},
+			b: {
+				sound: new Howl({
+		  		urls: ['sounds/wipe.mp3']
+				}),
+				color: '#33cbc5'
+			},
+			n: {
+				sound: new Howl({
+					urls: ['sounds/zig-zag.mp3']
+				}),
+				color: '#f1a80c'
+			},
+			m: {
+				sound: new Howl({
+		  		urls: ['sounds/bubbles.mp3']
+				}),
+				color: '#fe2ab6'
+			},
+		}
+
+		var circles = [];
+		function onKeyDown(event) {
+			// create a circle and randomise its display
+			var maxPoint = new Point(view.size.width, view.size.height);
+			var randomPoint = Point.random();
+			var showPoint = maxPoint * randomPoint;
+			var newCircle = new Path.Circle(showPoint, 500)
+			newCircle.fillColor = keyData[event.key].color;
+			// provide sound when the key is pressed
+			keyData[event.key].sound.play();
+			circles.push(newCircle);
+		}
+
+		function onFrame(event){
+			// create color and scale animations to circles
+			for(var i = 0; i < circles.length; i++){
+				circles[i].fillColor.hue += 1;
+				circles[i].scale(.9);
+				// remove the circles from the array after animating
+				if(circles[i].area < 1){
+      				circles[i].remove();
+      				circles.splice(i, 1);
+      				console.log(circles);
+				}
+			}
+		}
+			
+	</script>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
